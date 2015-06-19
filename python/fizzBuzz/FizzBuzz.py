@@ -56,13 +56,11 @@ class FizzBuzz(object):
         print(self.get_output())
         return 0
 
-test_cases = open(sys.argv[1], 'r')
+test = "5 3 25" 
 
-for test in test_cases:
-    # ignore test if it is an empty line
-    # 'test' represents the test case, do something with it
-    fb = FizzBuzz()
-    fb.run(test)
+# ignore test if it is an empty line
+# 'test' represents the test case, do something with it
+fb = FizzBuzz()
+fb.run(test)
     
 
-test_cases.close()
