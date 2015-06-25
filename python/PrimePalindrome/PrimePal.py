@@ -97,17 +97,30 @@ class Palindrom:
     def __init__(self, palArr):
         self.palArr = palArr
 
+    def set_palArr(self, palArr):
+        self.palArr = palArr
+
+    def get_palArr(self):
+        return self.palArr
+
     def is_palindrome(self):
         #Will check all conditions
         for item in self.palArr: 
+            if not type(item) == 'string':
+                item = str(item)
             #Incase it is not a string
-            strItem = str(item)
-            fP = strItem[0]
-            eP = strItem[len(strItem)-1]
-            for c in strItem:
-
-
-
+            fP = 0
+            eP = len(item)-1
+            for c in item:
+                if not fP == eP:
+                    if not item[fP] == item[eP]:
+                        return False
+                    else:
+                        fP += 1
+                        eP -= 1
+                else:
+                    return False
+            return True
                 
 
 """
@@ -121,8 +134,8 @@ print(pfpa)
 print(pf.is_palindrome())
 """
 
-a = [1001]
+a = [1041]
 
 p = Palindrom(a)
-p.is_palindrome()
+print(p.is_palindrome())
 
