@@ -6,10 +6,10 @@
 """
 class PrimeFinder:
 
-    def __init__(self):
+    def __init__(self, largest):
        self. primeArr = []
        self.rangeArr = []
-       self.largest = -1
+       self.largest = largest
     
     #Start Getters/Setters
     
@@ -92,50 +92,85 @@ class PrimeFinder:
                 return False
         return True
     
-class Palindrom:
+    def find_prime(self):
+        self.set_rangeArr()
+        self.set_primeArr()
 
-    def __init__(self, palArr):
+class PalindromFinder:
+
+    def __init__(self, palArr, d = 'f'):
+        self.direction = d
         self.palArr = palArr
+        self.pals = []
 
     def set_palArr(self, palArr):
         self.palArr = palArr
 
     def get_palArr(self):
         return self.palArr
+    
+    @staticmethod
+    def item_str(item):
+    #Incase it is not a string
+        if not type(item) == 'string':
+            item = str(item)
+        return item
 
-    def is_palindrome(self):
-        #Will check all conditions
-        for item in self.palArr: 
-            if not type(item) == 'string':
-                item = str(item)
-            #Incase it is not a string
-            fP = 0
-            eP = len(item)-1
-            for c in item:
-                if not fP == eP:
-                    if not item[fP] == item[eP]:
-                        return False
-                    else:
-                        fP += 1
-                        eP -= 1
-                else:
+    def iterate_palArr_forward(self):
+        for item in self.palArr:
+            item = self.item_str(item)
+            if self.is_palindrome(item):
+                self.pals.append(item)
+
+    def iterate_palArr_reverse(self):
+        for item in reversed(self.palArr):
+            item = self.item_str(item)
+            if self.is_palindrome(item):
+                self.pals.append(item)
+
+    def find_palindrome(self):
+        if self.direction == 'r':
+            self.iterate_palArr_reverse()
+        else: 
+            self.iterate_palArr_forward()
+        return self.pals
+
+
+    @staticmethod
+    def is_palindrome(item):
+        fP = 0
+        eP = len(item)-1
+        for c in item:
+            if not fP == eP:
+                if not item[fP] == item[eP]:
                     return False
-            return True
+                else:
+                    fP += 1
+                    eP -= 1
+            elif (not fP > eP):
+                return True
+            else:
+                return False
+        return True
                 
+class PrimePalindromeFinder:
+    def __init__(self, largest):
+        self.largest = largest
+        
+        pf = PrimeFinder(self.largest)
+        pf.find_prime()
+        self.primeList = pf.get_primeArr()
+        palF = PalindromFinder(self.primeList)
+        self.palList = palF.find_palindrome()
 
-"""
-pf = PrimeFinder()
-pf.set_largest(40)
-pf.set_rangeArr()
-pfr = pf.get_rangeArr()
-pf.set_primeArr()
-pfpa = pf.get_primeArr()
-print(pfpa)
-print(pf.is_palindrome())
-"""
+    def get_palArr(self):
+        return self.palList
 
-a = [1041]
+    def get_largest_palindrome(self):
+        tmp = self.get_palArr()
+        l = len(tmp)
+        return tmp[l-1]
 
-p = Palindrom(a)
-print(p.is_palindrome())
-
+pp = PrimePalindromeFinder(1000)
+l = pp.get_largest_palindrome()
+print(l)
