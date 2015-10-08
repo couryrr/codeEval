@@ -20,12 +20,11 @@ class Main{
 
             while(line != null){
                 number_seen = new ArrayList<Integer>();
-                int isHappy = 0;
-                char[] charNums = line.toCharArray();
-                
-                checkHappyness(charNums);
-                
-                line = bf.readLine();
+                if(Integer.parseInt(line) > -1){
+                    char[] charNums = line.toCharArray();                
+                    checkHappyness(charNums);            
+                    line = bf.readLine();
+                }
             }
         }
         catch(IOException e){
